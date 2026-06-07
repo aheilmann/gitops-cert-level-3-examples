@@ -11,7 +11,7 @@ spec:
       repoURL: https://github.com/Amikh/gitops-cert-level-3-examples.git
       revision: HEAD
       directories:
-      - path: argocd-apps-structure/apps/*/envs/qa   
+      - path: argocd-apps-structure/apps/*/envs/
   template:      
     metadata:
       name: '{{index .path.segments 2}}-{{index .path.segments 4}}'     
