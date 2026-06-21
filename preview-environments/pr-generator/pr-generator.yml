@@ -11,12 +11,12 @@ spec:
       github:
         owner: amikh
         repo: gitops-cert-level-3-examples
+        labels:
+           - preview-ready
         tokenRef:
           secretName: github-token
           key: token
       requeueAfterSeconds: 1800
-      labels:
-        - preview-ready
   template:
     metadata:
       name: 'myapp-{{.branch}}-{{.number}}'
