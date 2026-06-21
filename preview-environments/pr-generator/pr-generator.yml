@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: my-preview-apps
-  namespace: argocd  
+  namespace: argocd
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -11,17 +11,20 @@ spec:
       github:
         owner: amikh
         repo: gitops-cert-level-3-examples
-      requeueAfterSeconds: 180
+        tokenRef:
+          secretName: github-token
+          key: token
+      requeueAfterSeconds: 1800
       labels:
-        - preview-ready 
+        - preview-ready
   template:
     metadata:
-      name: 'myapp-{{.branch}}'
+      name: 'myapp-{{.branch}}-{{.number}}'
     spec:
       source:
         repoURL: 'https://github.com/amikh/gitops-cert-level-3-examples.git'
-        targetRevision: HEAD
-        path: preview-environments/kustomize-preview-app/ 
+        targetRevision: '{{.head_sha}}'
+        path: preview-environments/kustomize-preview-app/
         kustomize:
           images:
             - 'docker.io/kostiscodefresh/my-preview-app:{{.branch_slug}}'
@@ -31,9 +34,7 @@ spec:
         namespace: 'preview-{{.branch_slug}}'
       syncPolicy:
         automated:
-          prune: true  
+          prune: true
+          selfHeal: true
         syncOptions:
-        - CreateNamespace=true 
-
-
-        
+        - CreateNamespace=true
