@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/codefresh-contrib/gitops-cert-level-3-examples.git
+    repoURL: https://github.com/aheilmann/gitops-cert-level-3-examples.git
     targetRevision: HEAD
     path: argocd-apps-structure/appsets
   destination:
@@ -14,7 +14,7 @@ spec:
     namespace: argocd
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true  
-    automated: 
-      prune: true 
+    - CreateNamespace=true
+    automated:
+      prune: true
       selfHeal: true
